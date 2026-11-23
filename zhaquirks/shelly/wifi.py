@@ -139,7 +139,6 @@ SHELLY_WIFI_SETUP_MODELS = (
     "Dimmer US",
     "EM",
     "EM Mini",
-    "I4",
     "Mini1",
     "Mini1PM",
     "Plug US",

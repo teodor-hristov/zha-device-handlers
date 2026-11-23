@@ -3,14 +3,19 @@
 import asyncio
 
 import pytest
+from zha.application import Platform
+from zha.quirks import DEVICE_REGISTRY
 from zigpy.profiles import zha
 import zigpy.types as t
 from zigpy.zcl import ClusterType, foundation
-from zigpy.zcl.clusters.general import Basic
+from zigpy.zcl.clusters.closures import WindowCovering
+from zigpy.zcl.clusters.general import Basic, Scenes
 from zigpy.zcl.foundation import ZCLAttributeAccess
 
+from tests.zha_helpers import join_device_from_diagnostics, zha_gateway
 import zhaquirks
 from zhaquirks.shelly import SHELLY_MANUFACTURER_CODE, ShellyLightLevelCluster
+from zhaquirks.shelly.i4 import ShellyI4ButtonEvent, ShellyI4CoverEvent
 from zhaquirks.shelly.wifi import (
     SHELLY_WIFI_SETUP_CLUSTER_ID,
     SHELLY_WIFI_SETUP_ENDPOINT_ID,
@@ -185,3 +190,112 @@ def test_shelly_presence_wifi_setup_and_light_level(
     assert isinstance(quirked, ShellyCustomProfileDevice)
     assert isinstance(wifi, ShellyWiFiSetupCluster)
     assert isinstance(light_level, ShellyLightLevelCluster)
+
+
+I4_DIAGNOSTICS = "shelly-i4-0x02036300.json"
+I4_IEEE = "ab:cd:ef:12:fe:f9:00:b4"
+
+
+def _i4_events(entity) -> list[str]:
+    """Collect the event types the entity fires."""
+    events: list[str] = []
+    entity.on_event(
+        "event_triggered", lambda event: events.append(event.triggered.event_type)
+    )
+    return events
+
+
+async def _i4_command(cluster, command, *args) -> None:
+    """Deliver a command the I4 sends from one of its client clusters."""
+    hdr = foundation.ZCLHeader.cluster(
+        tsn=1,
+        command_id=command.id,
+        direction=foundation.Direction.Client_to_Server,
+    )
+    cluster.handle_message(hdr, command.schema(*args))
+
+
+async def test_shelly_i4_entities() -> None:
+    """Ensure the I4 has an event entity per input and per input pair."""
+    async with zha_gateway() as gateway:
+        device = await join_device_from_diagnostics(
+            gateway, I4_DIAGNOSTICS, DEVICE_REGISTRY
+        )
+
+        for number in range(1, 5):
+            entity = device.get_platform_entity(
+                Platform.EVENT, unique_id=f"{I4_IEEE}-{number}-button_{number}"
+            )
+            assert isinstance(entity, ShellyI4ButtonEvent)
+
+        for endpoint_id, inputs in ((5, "1_2"), (6, "3_4")):
+            entity = device.get_platform_entity(
+                Platform.EVENT,
+                unique_id=f"{I4_IEEE}-{endpoint_id}-inputs_{inputs}_cover",
+            )
+            assert isinstance(entity, ShellyI4CoverEvent)
+
+        assert not [
+            entity
+            for entity in device.platform_entities.values()
+            if entity.PLATFORM == Platform.BINARY_SENSOR
+        ]
+
+
+async def test_shelly_i4_button_events() -> None:
+    """Ensure scene recalls and the pair stop map to button events."""
+    async with zha_gateway() as gateway:
+        device = await join_device_from_diagnostics(
+            gateway, I4_DIAGNOSTICS, DEVICE_REGISTRY
+        )
+        button_1 = device.get_platform_entity(
+            Platform.EVENT, unique_id=f"{I4_IEEE}-1-button_1"
+        )
+        button_2 = device.get_platform_entity(
+            Platform.EVENT, unique_id=f"{I4_IEEE}-2-button_2"
+        )
+        events_1 = _i4_events(button_1)
+        events_2 = _i4_events(button_2)
+
+        scenes = device.device.endpoints[1].out_clusters[Scenes.cluster_id]
+        pair = device.device.endpoints[5].out_clusters[WindowCovering.cluster_id]
+        recall = Scenes.ServerCommandDefs.recall
+        stop = WindowCovering.ServerCommandDefs.stop
+
+        # A stop without a long push before it ends nothing
+        await _i4_command(pair, stop)
+        for scene_id in (1, 2, 3, 5, 4):
+            await _i4_command(scenes, recall, 1, scene_id)
+        await _i4_command(pair, stop)
+        await _i4_command(pair, stop)
+
+        assert events_1 == [
+            "single_press",
+            "double_press",
+            "triple_press",
+            "long_press_start",
+            "long_press_end",
+        ]
+        assert events_2 == []
+
+
+async def test_shelly_i4_cover_events() -> None:
+    """Ensure the WindowCovering commands of a pair map to cover events."""
+    async with zha_gateway() as gateway:
+        device = await join_device_from_diagnostics(
+            gateway, I4_DIAGNOSTICS, DEVICE_REGISTRY
+        )
+        entity = device.get_platform_entity(
+            Platform.EVENT, unique_id=f"{I4_IEEE}-6-inputs_3_4_cover"
+        )
+        events = _i4_events(entity)
+
+        pair = device.device.endpoints[6].out_clusters[WindowCovering.cluster_id]
+        for command in (
+            WindowCovering.ServerCommandDefs.up_open,
+            WindowCovering.ServerCommandDefs.stop,
+            WindowCovering.ServerCommandDefs.down_close,
+        ):
+            await _i4_command(pair, command)
+
+        assert events == ["opening", "stopped", "closing"]

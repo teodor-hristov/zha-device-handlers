@@ -1,0 +1,399 @@
+{
+  "version": 3,
+  "ieee": "ab:cd:ef:12:fe:f9:00:b4",
+  "nwk": "0x2BFE",
+  "manufacturer": "Shelly",
+  "model": "I4",
+  "friendly_manufacturer": "Shelly",
+  "friendly_model": "I4",
+  "name": "Shelly I4",
+  "quirk_applied": true,
+  "quirk_class": "zhaquirks.shelly.i4:(Shelly / I4)",
+  "exposes_features": [],
+  "manufacturer_code": 5264,
+  "power_source": "Mains",
+  "lqi": 232,
+  "rssi": -53,
+  "last_seen": "2026-11-23T14:18:44+00:00",
+  "available": true,
+  "device_type": "Router",
+  "active_coordinator": false,
+  "node_descriptor": {
+    "logical_type": "Router",
+    "complex_descriptor_available": false,
+    "user_descriptor_available": false,
+    "reserved": 0,
+    "aps_flags": 0,
+    "frequency_band": 8,
+    "mac_capability_flags": 142,
+    "manufacturer_code": 5264,
+    "maximum_buffer_size": 108,
+    "maximum_incoming_transfer_size": 1613,
+    "server_mask": 11264,
+    "maximum_outgoing_transfer_size": 1613,
+    "descriptor_capability_field": 0
+  },
+  "endpoints": {
+    "1": {
+      "profile_id": 260,
+      "device_type": {
+        "name": "ON_OFF_SWITCH",
+        "id": 0
+      },
+      "in_clusters": [
+        {
+          "cluster_id": "0x0000",
+          "attributes": [
+            {
+              "id": "0x0004",
+              "name": "manufacturer",
+              "zcl_type": "string",
+              "value": "Shelly"
+            },
+            {
+              "id": "0x0005",
+              "name": "model",
+              "zcl_type": "string",
+              "value": "I4"
+            }
+          ]
+        },
+        {
+          "cluster_id": "0x0003",
+          "attributes": []
+        },
+        {
+          "cluster_id": "0x0007",
+          "attributes": []
+        }
+      ],
+      "out_clusters": [
+        {
+          "cluster_id": "0x0003",
+          "attributes": []
+        },
+        {
+          "cluster_id": "0x0004",
+          "attributes": []
+        },
+        {
+          "cluster_id": "0x0005",
+          "attributes": []
+        },
+        {
+          "cluster_id": "0x0006",
+          "attributes": []
+        },
+        {
+          "cluster_id": "0x0019",
+          "attributes": []
+        }
+      ]
+    },
+    "2": {
+      "profile_id": 260,
+      "device_type": {
+        "name": "ON_OFF_SWITCH",
+        "id": 0
+      },
+      "in_clusters": [
+        {
+          "cluster_id": "0x0007",
+          "attributes": []
+        }
+      ],
+      "out_clusters": [
+        {
+          "cluster_id": "0x0003",
+          "attributes": []
+        },
+        {
+          "cluster_id": "0x0004",
+          "attributes": []
+        },
+        {
+          "cluster_id": "0x0005",
+          "attributes": []
+        },
+        {
+          "cluster_id": "0x0006",
+          "attributes": []
+        }
+      ]
+    },
+    "3": {
+      "profile_id": 260,
+      "device_type": {
+        "name": "ON_OFF_SWITCH",
+        "id": 0
+      },
+      "in_clusters": [
+        {
+          "cluster_id": "0x0007",
+          "attributes": []
+        }
+      ],
+      "out_clusters": [
+        {
+          "cluster_id": "0x0003",
+          "attributes": []
+        },
+        {
+          "cluster_id": "0x0004",
+          "attributes": []
+        },
+        {
+          "cluster_id": "0x0005",
+          "attributes": []
+        },
+        {
+          "cluster_id": "0x0006",
+          "attributes": []
+        }
+      ]
+    },
+    "4": {
+      "profile_id": 260,
+      "device_type": {
+        "name": "ON_OFF_SWITCH",
+        "id": 0
+      },
+      "in_clusters": [
+        {
+          "cluster_id": "0x0007",
+          "attributes": []
+        }
+      ],
+      "out_clusters": [
+        {
+          "cluster_id": "0x0003",
+          "attributes": []
+        },
+        {
+          "cluster_id": "0x0004",
+          "attributes": []
+        },
+        {
+          "cluster_id": "0x0005",
+          "attributes": []
+        },
+        {
+          "cluster_id": "0x0006",
+          "attributes": []
+        }
+      ]
+    },
+    "5": {
+      "profile_id": 260,
+      "device_type": {
+        "name": "COMBINED_INTERFACE",
+        "id": 7
+      },
+      "in_clusters": [],
+      "out_clusters": [
+        {
+          "cluster_id": "0x0003",
+          "attributes": []
+        },
+        {
+          "cluster_id": "0x0004",
+          "attributes": []
+        },
+        {
+          "cluster_id": "0x0006",
+          "attributes": []
+        },
+        {
+          "cluster_id": "0x0008",
+          "attributes": []
+        },
+        {
+          "cluster_id": "0x0102",
+          "attributes": []
+        }
+      ]
+    },
+    "6": {
+      "profile_id": 260,
+      "device_type": {
+        "name": "COMBINED_INTERFACE",
+        "id": 7
+      },
+      "in_clusters": [],
+      "out_clusters": [
+        {
+          "cluster_id": "0x0003",
+          "attributes": []
+        },
+        {
+          "cluster_id": "0x0004",
+          "attributes": []
+        },
+        {
+          "cluster_id": "0x0006",
+          "attributes": []
+        },
+        {
+          "cluster_id": "0x0008",
+          "attributes": []
+        },
+        {
+          "cluster_id": "0x0102",
+          "attributes": []
+        }
+      ]
+    },
+    "239": {
+      "profile_id": 260,
+      "device_type": {
+        "name": "unknown_0x2001",
+        "id": 8193
+      },
+      "in_clusters": [
+        {
+          "cluster_id": "0xfc01",
+          "attributes": []
+        },
+        {
+          "cluster_id": "0xfc02",
+          "attributes": []
+        }
+      ],
+      "out_clusters": []
+    },
+    "242": {
+      "profile_id": 41440,
+      "device_type": {
+        "name": "PROXY_BASIC",
+        "id": 97
+      },
+      "in_clusters": [],
+      "out_clusters": [
+        {
+          "cluster_id": "0x0021",
+          "attributes": []
+        }
+      ]
+    }
+  },
+  "original_signature": {
+    "manufacturer": "Shelly",
+    "model": "I4",
+    "node_desc": {
+      "logical_type": 1,
+      "complex_descriptor_available": 0,
+      "user_descriptor_available": 0,
+      "reserved": 0,
+      "aps_flags": 0,
+      "frequency_band": 8,
+      "mac_capability_flags": 142,
+      "manufacturer_code": 5264,
+      "maximum_buffer_size": 108,
+      "maximum_incoming_transfer_size": 1613,
+      "server_mask": 11264,
+      "maximum_outgoing_transfer_size": 1613,
+      "descriptor_capability_field": 0
+    },
+    "endpoints": {
+      "1": {
+        "profile_id": "0x0104",
+        "device_type": "0x0000",
+        "input_clusters": [
+          "0x0000",
+          "0x0003",
+          "0x0007"
+        ],
+        "output_clusters": [
+          "0x0003",
+          "0x0004",
+          "0x0005",
+          "0x0006",
+          "0x0019"
+        ]
+      },
+      "2": {
+        "profile_id": "0x0104",
+        "device_type": "0x0000",
+        "input_clusters": [
+          "0x0007"
+        ],
+        "output_clusters": [
+          "0x0003",
+          "0x0004",
+          "0x0005",
+          "0x0006"
+        ]
+      },
+      "3": {
+        "profile_id": "0x0104",
+        "device_type": "0x0000",
+        "input_clusters": [
+          "0x0007"
+        ],
+        "output_clusters": [
+          "0x0003",
+          "0x0004",
+          "0x0005",
+          "0x0006"
+        ]
+      },
+      "4": {
+        "profile_id": "0x0104",
+        "device_type": "0x0000",
+        "input_clusters": [
+          "0x0007"
+        ],
+        "output_clusters": [
+          "0x0003",
+          "0x0004",
+          "0x0005",
+          "0x0006"
+        ]
+      },
+      "5": {
+        "profile_id": "0x0104",
+        "device_type": "0x0007",
+        "input_clusters": [],
+        "output_clusters": [
+          "0x0003",
+          "0x0004",
+          "0x0006",
+          "0x0008",
+          "0x0102"
+        ]
+      },
+      "6": {
+        "profile_id": "0x0104",
+        "device_type": "0x0007",
+        "input_clusters": [],
+        "output_clusters": [
+          "0x0003",
+          "0x0004",
+          "0x0006",
+          "0x0008",
+          "0x0102"
+        ]
+      },
+      "239": {
+        "profile_id": "0x0104",
+        "device_type": "0x2001",
+        "input_clusters": [
+          "0xfc01",
+          "0xfc02"
+        ],
+        "output_clusters": []
+      },
+      "242": {
+        "profile_id": "0xa1e0",
+        "device_type": "0x0061",
+        "input_clusters": [],
+        "output_clusters": [
+          "0x0021"
+        ]
+      }
+    }
+  },
+  "zha_lib_entities": {},
+  "neighbors": [],
+  "routes": []
+}
